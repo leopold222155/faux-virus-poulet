@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Centre de sécurité — simulation humoristique</title>
+<style>
+:root{font-family:"Segoe UI",Arial,sans-serif;color:#eef3fb;background:#080d16}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#20324d 0,#0b1422 48%,#05080e 100%);overflow:hidden}
+button{font:inherit;cursor:pointer}
+#app{min-height:100vh;display:grid;place-items:center;padding:22px}
+.panel{width:min(900px,96vw);border:1px solid #ffffff20;border-radius:18px;background:#111b2aee;box-shadow:0 25px 100px #000b;overflow:hidden}
+.titlebar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#1a2638;border-bottom:1px solid #ffffff16;color:#cbd6e6;font-size:13px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:20px;height:20px;background:linear-gradient(135deg,#4db7ff 0 48%,#1671ce 49%);clip-path:polygon(0 8%,46% 0,46% 45%,0 45%,0 8%,54% 0,100% 0,100% 45%,54% 45%,54% 55%,100% 55%,100% 100%,54% 92%,54% 55%,0 55%,0 92%,46% 100%,46% 55%)}
+.content{padding:clamp(22px,5vw,48px)}
+.eyebrow{font-size:12px;letter-spacing:.13em;color:#ff7373;font-weight:700}
+h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:12px 0;color:#fff}
+.lead{color:#b8c5d8;line-height:1.6;max-width:720px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:28px}
+.card{background:#0b1320;border:1px solid #ffffff19;border-radius:13px;padding:20px}
+.card h2{font-size:14px;color:#aebed3;text-transform:uppercase;letter-spacing:.08em;margin:0 0 14px}
+.demand{font-size:clamp(30px,5vw,46px);font-weight:750;color:#ffcb6b;letter-spacing:.01em}
+.small{font-size:13px;color:#91a2b9;line-height:1.55}
+.timer{font-variant-numeric:tabular-nums;font-size:clamp(40px,7vw,62px);font-weight:700;letter-spacing:.04em;color:#fff}
+.progress{height:8px;background:#29364a;border-radius:99px;overflow:hidden;margin:14px 0}
+.bar{height:100%;width:100%;background:linear-gradient(90deg,#ffbf5c,#ef5c65);transition:width 1s linear}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.status{display:flex;gap:10px;align-items:center;color:#f6c7c7;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:#ff5d66;box-shadow:0 0 12px #ff5d66}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.primary,.secondary{border-radius:8px;padding:12px 18px;border:1px solid transparent;font-weight:600}
+.primary{background:#247bd1;color:white}.primary:hover{background:#328be2}
+.secondary{background:#202d40;color:#dce7f5;border-color:#ffffff22}
+.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;color:#8192a8;font-size:12px}
+#reveal{display:none;text-align:center}
+#reveal h1{color:#72e2a0}
+.chicken{font-size:76px;margin:10px}
+.tag{display:inline-block;background:#153d2b;color:#8ef0b5;border:1px solid #2b8052;border-radius:99px;padding:7px 13px;font-size:12px;font-weight:700}
+.notice{margin-top:20px;padding:12px 14px;background:#17263a;border-radius:9px;color:#b8c9df;font-size:12px;line-height:1.5}
+#startscreen{text-align:center}
+#startscreen h1{margin-top:18px}
+#exitToast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#e8eef8;color:#142033;border-radius:9px;padding:11px 16px;font-size:13px;box-shadow:0 8px 30px #0008;display:none;z-index:5}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.content{padding:24px}.footer{display:block}.footer span{display:block;margin-top:5px}}
+</style>
+</head>
+<body>
+<div id="app">
+  <main class="panel">
+    <div class="titlebar">
+      <div class="brand"><span class="logo"></span><span>Centre de sécurité — démonstration</span></div>
+      <span>SIMULATION</span>
+    </div>
+    <section class="content" id="startscreen">
+      <div class="eyebrow">SCÉNARIO HUMORISTIQUE • AUCUNE MENACE RÉELLE</div>
+      <h1>Simulation de cyberalerte</h1>
+      <p class="lead">Une fausse interface plein écran inspirée des écrans d'alerte. Elle ne verrouille pas Windows, ne scanne rien et ne touche à aucun fichier.</p>
+      <div class="actions" style="justify-content:center">
+        <button class="primary" id="begin">Lancer la simulation</button>
+      </div>
+      <div class="notice">Appuie sur Échap à tout moment pour quitter. Le compte à rebours est uniquement décoratif.</div>
+    </section>
+    <section class="content" id="main" style="display:none">
+      <div class="eyebrow">ALERTE DE SÉCURITÉ • SIMULATION FICTIVE</div>
+      <h1>Votre ordinateur est en cours de vérification</h1>
+      <p class="lead">Une activité inhabituelle a été simulée. Pas de panique : ceci est une blague, aucune analyse ni aucun verrouillage réel n'a lieu.</p>
+      <div class="grid">
+        <div class="card">
+          <h2>Demande de libération</h2>
+          <div class="demand">1 KG DE POULET 🍗</div>
+          <p class="small">Veuillez préparer la livraison réglementaire de poulet. Paiement accepté : poulet frais uniquement. Nuggets non certifiés.</p>
+          <div class="status"><span class="dot"></span><span>État : scénario de rançon fictif</span></div>
+        </div>
+        <div class="card">
+          <h2>Temps restant (fictif)</h2>
+          <div class="timer" id="timer">05:00</div>
+          <div class="progress"><div class="bar" id="bar"></div></div>
+          <div class="row small"><span>Compte à rebours</span><strong id="state">EN COURS</strong></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="secondary" id="joke">Révéler la blague maintenant</button>
+      </div>
+      <div class="footer">
+        <span>Simulation locale • Aucun fichier modifié • Aucune donnée collectée</span>
+        <span>Appuie sur Échap pour quitter à tout moment</span>
+      </div>
+    </section>
+    <section class="content" id="reveal">
+      <span class="tag">SIMULATION TERMINÉE</span>
+      <div class="chicken">🍗</div>
+      <h1>ORDINATEUR LIBÉRÉ !</h1>
+      <h2 style="font-size:clamp(22px,4vw,34px);color:#ffcb6b">RANÇON : 1 KG DE POULET</h2>
+      <p class="lead" style="margin:0 auto">Tu viens de te faire avoir 😂<br>Aucun virus, aucun fichier verrouillé, aucune donnée touchée.</p>
+      <div class="notice">Petit rappel prévention : méfie-toi des vraies alertes alarmistes, ne clique pas sur des liens inconnus et ne télécharge pas de pièces jointes suspectes.</div>
+      <div class="actions" style="justify-content:center"><button class="primary" id="again">Rejouer</button></div>
+      <div class="footer" style="justify-content:center">Appuie sur Échap pour fermer.</div>
+    </section>
+  </main>
+</div>
+<div id="exitToast">Simulation fermée — aucun changement n'a été effectué.</div>
+<script>
+let remaining=300, interval=null, started=false;
+const $=id=>document.getElementById(id);
+function show(id){['startscreen','main','reveal'].forEach(x=>$(x).style.display=x===id?'block':'none')}
+function finish(){clearInterval(interval);interval=null;show('reveal')}
+function tick(){
+ remaining=Math.max(0,remaining-1);
+ const m=String(Math.floor(remaining/60)).padStart(2,'0');
+ const s=String(remaining%60).padStart(2,'0');
+ $('timer').textContent=m+':'+s;
+ $('bar').style.width=(remaining/300*100)+'%';
+ if(remaining===0){$('state').textContent='TERMINÉ';finish()}
+}
+$('begin').addEventListener('click',()=>{
+ if(started)return;started=true;remaining=300;show('main');interval=setInterval(tick,1000);
+ if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen().catch(()=>{});}
+});
+$('joke').addEventListener('click',finish);
+$('again').addEventListener('click',()=>{remaining=300;started=false;show('startscreen')});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){
+   clearInterval(interval);interval=null;
+   if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+   $('exitToast').style.display='block';
+   setTimeout(()=>$('exitToast').style.display='none',2600);
+   show('startscreen');started=false;remaining=300;
+ }
+});
+document.addEventListener('fullscreenchange',()=>{
+ // La sortie du plein écran ne bloque jamais l'utilisateur.
+});
+</script>
+</body>
+</html>
